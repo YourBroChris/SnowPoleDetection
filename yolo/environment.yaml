@@ -1,0 +1,14 @@
+name: yolo_env
+channels:
+  - defaults
+  - conda-forge
+dependencies:
+  - python=3.9
+  - pip
+  - numpy
+  - opencv
+  - matplotlib
+  - pip:
+      - torch
+      - torchvision
+      - yolov5  # If you plan to use Ultralytics' YOLOv5 from PyPI
