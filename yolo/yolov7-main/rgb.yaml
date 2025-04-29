@@ -1,0 +1,8 @@
+nc: 1
+names: ['pole']
+
+
+train: data/rgb/images/train
+val: data/rgb/images/valid
+test: data/rgb/images/test
+
