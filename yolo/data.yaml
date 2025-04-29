@@ -1,0 +1,8 @@
+nc: 1
+names: ['pole']
+
+
+train: /datasets/tdt4265/ad/open/Poles/lidar/combined_color/train
+val: /datasets/tdt4265/ad/open/Poles/lidar/combined_color/valid
+#test: /datasets/tdt4265/ad/open/Poles/lidar/combined_color/test
+
