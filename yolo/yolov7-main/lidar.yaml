@@ -2,7 +2,7 @@ nc: 1
 names: ['pole']
 
 
-train: data/lidar/combined_color/train
-val: data/lidar/combined_color/valid
-test: data/lidar/combined_color/test
+train: data/lidar/images/train
+val: data/lidar/images/valid
+test: data/lidar/images/test
 
