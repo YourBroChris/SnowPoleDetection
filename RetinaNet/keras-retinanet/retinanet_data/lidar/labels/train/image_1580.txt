@@ -1,0 +1,1 @@
+/datasets/tdt4265/ad/open/Poles/lidar/labels/train/image_1580.txt

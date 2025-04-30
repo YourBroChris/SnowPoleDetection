@@ -1,0 +1,1 @@
+/datasets/tdt4265/ad/open/Poles/rgb/labels/valid/frame_000130.txt
