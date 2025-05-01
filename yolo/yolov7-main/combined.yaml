@@ -1,0 +1,8 @@
+nc: 1
+names: ['pole']
+
+
+train: data/combined/images/train
+val: data/combined/images/valid
+
+
