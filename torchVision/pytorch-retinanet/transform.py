@@ -21,13 +21,14 @@ def get_transforms(is_train=True):
             # rotate_limit controls rotation (degrees)
             # shift_limit controls translation (+/- percentage)
             # border_mode specifies how to fill new pixels (e.g., after rotation)
-            A.ShiftScaleRotate(
-                shift_limit=0.0625, # Shift by max 6.25%
-                scale_limit=0.15,    # Zoom in/out by max 15%
-                rotate_limit=10,     # Rotate by max 10 degrees
-                p=0.7,               # Apply 70% of the time
-                border_mode=cv2.BORDER_CONSTANT, # Fill new areas with black
-                value=0 # Value for border_mode=cv2.BORDER_CONSTANT
+            A.Affine(
+                scale=(0.85, 1.15),      # Scale factor range (equivalent to scale_limit=0.15)
+                translate_percent={'x': (-0.0625, 0.0625), 'y': (-0.0625, 0.0625)}, # Translate range (equivalent to shift_limit=0.0625)
+                rotate=(-10, 10),        # Rotation range in degrees (equivalent to rotate_limit=10)
+                shear={'x': (-10, 10), 'y': (-10, 10)}, # Shear range in degrees (added as requested)
+                p=0.7,                   # Apply 70% of the time
+                mode=cv2.BORDER_CONSTANT,# How to fill points outside boundaries
+                cval=0 
             ),
 
             # --- Pixel-level Augmentations ---
