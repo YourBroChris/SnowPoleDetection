@@ -3,6 +3,7 @@ from albumentations.pytorch import ToTensorV2 # Important for PyTorch
 import torch
 import numpy as np
 import cv2 # Needed for border_mode in ShiftScaleRotate
+import math
 
 # Define image size - choose based on model requirements or experiments
 IMG_SIZE = 1600 # Example size
@@ -16,19 +17,16 @@ def get_transforms(is_train=True):
             # Keep HorizontalFlip
             A.HorizontalFlip(p=0.5),
 
-            # Add ShiftScaleRotate for zoom, rotation, and translation
-            # scale_limit controls zoom (+/- percentage)
-            # rotate_limit controls rotation (degrees)
-            # shift_limit controls translation (+/- percentage)
-            # border_mode specifies how to fill new pixels (e.g., after rotation)
+            
             A.Affine(
-                scale=(0.85, 1.15),      # Scale factor range (equivalent to scale_limit=0.15)
-                translate_percent={'x': (-0.0625, 0.0625), 'y': (-0.0625, 0.0625)}, # Translate range (equivalent to shift_limit=0.0625)
-                rotate=(-10, 10),        # Rotation range in degrees (equivalent to rotate_limit=10)
-                shear={'x': (-10, 10), 'y': (-10, 10)}, # Shear range in degrees (added as requested)
-                p=0.7,                   # Apply 70% of the time
-                mode=cv2.BORDER_CONSTANT,# How to fill points outside boundaries
-                cval=0 
+                scale=(0.85, 1.15),
+                translate_percent={'x': (-0.0625, 0.0625), 'y': (-0.0625, 0.0625)},
+                rotate=(-10, 10),
+                shear={'x': (-10, 10), 'y': (-10, 10)},
+                p=0.7,
+                # Corrected parameter names:
+                border_mode=cv2.BORDER_CONSTANT, # Use border_mode
+                fill=0                         # Use fill for the constant value
             ),
 
             # --- Pixel-level Augmentations ---
@@ -51,8 +49,9 @@ def get_transforms(is_train=True):
             A.Blur(blur_limit=(3, 7), p=0.1), # Kernel size between 3 and 7, 10% chance
 
             # Add noise sometimes
-            A.GaussNoise(var_limit=(10.0, 50.0), p=0.1), # Gaussian noise, 10% chance
-
+            A.GaussNoise(
+                p=0.1 # Keep original probability
+            ),
 
             # --- Preprocessing ---
             # Resize MUST come after geometric transforms that change size/shape
